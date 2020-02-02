@@ -1,0 +1,42 @@
+create table book_table (
+ISBN varchar(10),
+title varchar(100),
+price number(6,2),
+subject subject_type,
+primary key (ISBN),
+unique(title)
+) nested table subject store as subject_table;
+
+create type subject_type as table of subject_t2;
+
+create type subject_t2 as object(
+subject_id integer
+)
+
+create table subject_table2(
+subject_id int,
+subject_name varchar(50),
+primary key (subject_id),
+unique (subject_name)
+);
+ 
+create table cust_table (
+cust_id int,
+cust_name varchar(50),
+cust_order order_type,
+primary key (cust_id),
+unique (cust_name)
+) nested table cust_order store as order_table;
+
+create type order_type as table of order_t;
+
+create type order_t as object(
+title varchar(100),
+quantity integer
+)
+
+create sequence cust_id start with 1 increment by 1 cache 100;
+create sequence subject_id start with 1 increment by 1 cache 100;
+
+
+
